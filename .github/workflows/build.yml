@@ -9,7 +9,14 @@ jobs:
         with:
           java-version: '8'
           distribution: 'temurin'
-      - run: chmod +x gradlew && ./gradlew build
+      - name: Download Forge MDK
+        run: |
+          wget https://maven.minecraftforge.net/net/minecraftforge/forge/1.12.2-14.23.5.2847/forge-1.12.2-14.23.5.2847-mdk.zip
+          unzip forge-1.12.2-14.23.5.2847-mdk.zip -d forge-mdk
+          cp forge-mdk/gradlew .
+          cp -r forge-mdk/gradle .
+          chmod +x gradlew
+      - run: ./gradlew build
       - uses: actions/upload-artifact@v4
         with:
           name: pawpatrol-jar
